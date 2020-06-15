@@ -40,30 +40,30 @@ typedef struct {
 
 /// NetworkInfo
 typedef struct {
-    u64 local_communication_id;        ///< LocalCommunicationId
-    u8 reserved_x8[0x2];               ///< Reserved
-    u16 userdata_filter;               ///< Arbitrary user data which can be used for filtering with \ref LdnScanFilter.
-    u8 reserved_xC[0x4];               ///< Reserved
-    u8 network_id[0x10];               ///< LdnSecurityParameter::network_id. NetworkId which is used to generate/overwrite the ssid. With \ref ldnScan / \ref ldnScanPrivate, this is only done after filtering when unk_x4B is value 0x2.
+    uint64_t local_communication_id;        ///< LocalCommunicationId
+    uint8_t reserved_x8[0x2];               ///< Reserved
+    uint16_t userdata_filter;               ///< Arbitrary user data which can be used for filtering with \ref LdnScanFilter.
+    uint8_t reserved_xC[0x4];               ///< Reserved
+    uint8_t network_id[0x10];               ///< LdnSecurityParameter::network_id. NetworkId which is used to generate/overwrite the ssid. With \ref ldnScan / \ref ldnScanPrivate, this is only done after filtering when unk_x4B is value 0x2.
     LdnMacAddress mac_addr;            ///< \ref LdnMacAddress
     LdnSsid ssid;                      ///< \ref LdnSsid
-    s16 network_channel;               ///< NetworkChannel
-    s8 link_level;                     ///< LinkLevel
-    u8 unk_x4B;                        ///< Unknown. Set to hard-coded value 0x2 with output structs, except with \ref ldnScan / \ref ldnScanPrivate which can also set value 0x1 in certain cases.
-    u8 pad_x4C[0x4];                   ///< Padding
-    u8 sec_param_data[0x10];           ///< LdnSecurityParameter::data
-    u16 sec_type;                      ///< LdnSecurityConfig::type
-    u8 accept_policy;                  ///< \ref LdnAcceptPolicy
-    u8 unk_x63;                        ///< Only set with \ref ldnScan / \ref ldnScanPrivate, when unk_x4B is value 0x2.
-    u8 pad_x64[0x2];                   ///< Padding
-    s8 participant_max;                ///< Maximum participants, for nodes.
-    u8 participant_num;                ///< ParticipantNum, number of set entries in nodes. If unk_x4B is not 0x2, ParticipantNum should be handled as if it's 0.
+    int16_t network_channel;               ///< NetworkChannel
+    int8_t link_level;                     ///< LinkLevel
+    uint8_t unk_x4B;                        ///< Unknown. Set to hard-coded value 0x2 with output structs, except with \ref ldnScan / \ref ldnScanPrivate which can also set value 0x1 in certain cases.
+    uint8_t pad_x4C[0x4];                   ///< Padding
+    uint8_t sec_param_data[0x10];           ///< LdnSecurityParameter::data
+    uint16_t sec_type;                      ///< LdnSecurityConfig::type
+    uint8_t accept_policy;                  ///< \ref LdnAcceptPolicy
+    uint8_t unk_x63;                        ///< Only set with \ref ldnScan / \ref ldnScanPrivate, when unk_x4B is value 0x2.
+    uint8_t pad_x64[0x2];                   ///< Padding
+    int8_t participant_max;                ///< Maximum participants, for nodes.
+    uint8_t participant_num;                ///< ParticipantNum, number of set entries in nodes. If unk_x4B is not 0x2, ParticipantNum should be handled as if it's 0.
     LdnNodeInfo nodes[8];              ///< Array of \ref LdnNodeInfo, starting with the AccessPoint node.
-    u8 reserved_x268[0x2];             ///< Reserved
-    u16 advertise_data_size;           ///< AdvertiseData size (\ref ldnSetAdvertiseData)
-    u8 advertise_data[0x180];          ///< AdvertiseData (\ref ldnSetAdvertiseData)
-    u8 reserved_x3EC[0x8C];            ///< Reserved
-    u64 auth_id;                       ///< Random AuthenticationId.
+    uint8_t reserved_x268[0x2];             ///< Reserved
+    uint16_t advertise_data_size;           ///< AdvertiseData size (\ref ldnSetAdvertiseData)
+    uint8_t advertise_data[0x180];          ///< AdvertiseData (\ref ldnSetAdvertiseData)
+    uint8_t reserved_x3EC[0x8C];            ///< Reserved
+    uint64_t auth_id;                       ///< Random AuthenticationId.
 } LdnNetworkInfo;
 
 typedef struct {
