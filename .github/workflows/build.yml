@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: true
-    - uses: spacemeowx2/devkitpro-action@latest
+    - uses: romracer/devkitpro-action@latest
       with:
         cmd: make -j8
 
