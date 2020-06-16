@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <switch.h>
 #include <string.h>
-//#include "ldn.h"
+#include "ldn.h"
 
 #define MODULEID 0x233
 static Service g_ldnSrv;
