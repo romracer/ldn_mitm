@@ -38,32 +38,18 @@ typedef struct {
     uint8_t _unk2[16];
 } NodeInfo;
 
-/// NetworkInfo
 typedef struct {
-    u64 local_communication_id;        ///< LocalCommunicationId
-    u8 reserved_x8[0x2];               ///< Reserved
-    u16 userdata_filter;               ///< Arbitrary user data which can be used for filtering with \ref LdnScanFilter.
-    u8 reserved_xC[0x4];               ///< Reserved
-    u8 network_id[0x10];               ///< LdnSecurityParameter::network_id. NetworkId which is used to generate/overwrite the ssid. With \ref ldnScan / \ref ldnScanPrivate, this is only done after filtering when unk_x4B is value 0x2.
-    LdnMacAddress mac_addr;            ///< \ref LdnMacAddress
-    LdnSsid ssid;                      ///< \ref LdnSsid
-    s16 network_channel;               ///< NetworkChannel
-    s8 link_level;                     ///< LinkLevel
-    u8 unk_x4B;                        ///< Unknown. Set to hard-coded value 0x2 with output structs, except with \ref ldnScan / \ref ldnScanPrivate which can also set value 0x1 in certain cases.
-    u8 pad_x4C[0x4];                   ///< Padding
-    u8 sec_param_data[0x10];           ///< LdnSecurityParameter::data
-    u16 sec_type;                      ///< LdnSecurityConfig::type
-    u8 accept_policy;                  ///< \ref LdnAcceptPolicy
-    u8 unk_x63;                        ///< Only set with \ref ldnScan / \ref ldnScanPrivate, when unk_x4B is value 0x2.
-    u8 pad_x64[0x2];                   ///< Padding
-    s8 participant_max;                ///< Maximum participants, for nodes.
-    u8 participant_num;                ///< ParticipantNum, number of set entries in nodes. If unk_x4B is not 0x2, ParticipantNum should be handled as if it's 0.
-    LdnNodeInfo nodes[8];              ///< Array of \ref LdnNodeInfo, starting with the AccessPoint node.
-    u8 reserved_x268[0x2];             ///< Reserved
-    u16 advertise_data_size;           ///< AdvertiseData size (\ref ldnSetAdvertiseData)
-    u8 advertise_data[0x180];          ///< AdvertiseData (\ref ldnSetAdvertiseData)
-    u8 reserved_x3EC[0x8C];            ///< Reserved
-    u64 auth_id;                       ///< Random AuthenticationId.
+    uint8_t unkRandom[16];
+    uint16_t securityMode;
+    uint8_t stationAcceptPolicy;
+    uint8_t _unk1[3];
+    uint8_t nodeCountMax;
+    uint8_t nodeCount;
+    NodeInfo nodes[NodeCountMax];
+    uint16_t _unk2;
+    uint16_t advertiseDataSize;
+    uint8_t advertiseData[AdvertiseDataSizeMax];
+    char _unk3[148];
 } LdnNetworkInfo;
 
 typedef struct {
@@ -133,12 +119,12 @@ typedef struct {
     SessionId sessionId;
 } SecurityParameter;
 
-Result ldnGetNetworkInfo(LdnNetworkInfo *out);
-Result ldnScan(s32 channel, const LdnScanFilter *filter, LdnNetworkInfo *network_info, s32 count, s32 *total_out);
+Result ldnGetNetworkInfo(UserLocalCommunicationService* s, void* out);
+Result ldnScan(UserLocalCommunicationService* s, u16 channel, void* unk2, u16* unkOut, void* outBuf, size_t outLen);
 Result ldnCreateUserLocalCommunicationService(Service* s, UserLocalCommunicationService* out);
-Result ldnInitialize(LdnServiceType service_type);
-Result ldnOpenStation(void);
-Result ldnGetState(LdnState *out);
+Result ldnInitialize(UserLocalCommunicationService* s);
+Result ldnOpenStation(UserLocalCommunicationService* s);
+Result ldnGetState(UserLocalCommunicationService* s, u32* state);
 Result ldnMitmSaveLogToFile(LdnMitmConfigService *s);
 Result ldnMitmGetVersion(LdnMitmConfigService *s, char *version);
 Result ldnMitmGetLogging(LdnMitmConfigService *s, u32 *enabled);
