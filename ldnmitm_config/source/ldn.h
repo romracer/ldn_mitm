@@ -38,6 +38,34 @@ typedef struct {
     uint8_t _unk2[16];
 } NodeInfo;
 
+/// Ipv4Address. This is essentially the same as struct in_addr - hence this can be used with standard sockets (byteswap required).
+typedef struct {
+    uint32_t addr;                          ///< Address
+} LdnIpv4Address;
+
+/// MacAddress
+typedef struct {
+    uint8_t addr[6];                        ///< Address
+} LdnMacAddress;
+
+/// Ssid
+typedef struct {
+    uint8_t len;                            ///< Length excluding NUL-terminator, must be 0x1-0x20.
+    char str[0x21];                    ///< SSID string including NUL-terminator, str[len_field] must be 0. The chars in this string must be be in the range of 0x20-0x7F, for when the Ssid is converted to a string (otherwise the byte written to the string will be 0).
+} LdnSsid;
+
+/// NodeInfo
+typedef struct {
+    LdnIpv4Address ip_addr;            ///< \ref LdnIpv4Address
+    LdnMacAddress mac_addr;            ///< \ref LdnMacAddress
+    int8_t id;                             ///< ID / index
+    uint8_t is_connected;                   ///< IsConnected flag
+    char nickname[0x20];               ///< LdnUserConfig::nickname
+    uint8_t reserved_x2C[0x2];              ///< Reserved
+    int16_t local_communication_version;   ///< LocalCommunicationVersion
+    uint8_t reserved_x30[0x10];             ///< Reserved
+} LdnNodeInfo;
+
 /// NetworkInfo
 typedef struct {
     uint64_t local_communication_id;        ///< LocalCommunicationId
